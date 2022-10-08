@@ -32,7 +32,7 @@ jobs:
       #  run: echo "${{ steps.read_file.outputs.contents }}"
 
       - name: Bash
-        run: while IFS= read -r line; do echo ${#line}; done < README.line
+        run: while IFS= read -r line; do echo ${#line}; done < README.md
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
