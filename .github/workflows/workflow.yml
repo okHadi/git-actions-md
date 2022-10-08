@@ -22,14 +22,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Read file contents
-        id: read_file
-        uses: andstor/file-reader-action@v1
-        with:
-          path: "README.md"
+      #- name: Read file contents
+      # id: read_file
+      # uses: andstor/file-reader-action@v1
+      # with:
+      #   path: "README.md"
 
-      - name: File contents
-        run: echo "${{ steps.read_file.outputs.contents }}"
+      # - name: File contents
+      #  run: echo "${{ steps.read_file.outputs.contents }}"
+
+      - name: Bash
+        run: while IFS= read -r line; do echo ${#line}; done < README.line
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
