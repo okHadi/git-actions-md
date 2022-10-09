@@ -20,24 +20,22 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
       - uses: actions/checkout@v3
-      
-      - name: Bash
-        run: |
-          firstline=$(sed '1q;d' README.md) 
-        # reads the first line
-          secondline=$(sed '2q;d' README.md)
-        #reads the second line
-          firstLineChar=${firstline:0:1}
-          secondLineChar=${secondline:0:1}
-          if [ "$firstLineChar" == "#" ]; then echo result="heading" >> $GITHUB_ENV; else echo result="No heading" >> $GITHUB_ENV ; fi
-        
+
+      #    - name: Bash
+      #     run: |
+      #      firstline=$(sed '1q;d' README.md)
+      #   # reads the first line
+      #    secondline=$(sed '2q;d' README.md)
+      #  #reads the second line
+      #    firstLineChar=${firstline:0:1}
+      #    secondLineChar=${secondline:0:1}
+      #    if [ "$firstLineChar" == "#" ]; then echo result="heading" >> $GITHUB_ENV; else echo result="No heading" >> $GITHUB_ENV ; fi
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
-             echo ${{ env.result }}
+          echo ${{ env.result }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
