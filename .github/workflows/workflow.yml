@@ -33,12 +33,12 @@ jobs:
 
       - name: Bash
         run: |
-          firstline=$(sed '1q;d' README.md) 
+          firstline=$(sed '1q;d' README.md) >> $GITHUB_ENV 
         # reads the first line
-          secondline=$(sed '2q;d' README.md)
+          secondline=$(sed '2q;d' README.md) >> $GITHUB_ENV
         #reads the second line
-        firstLineChar=${firstline:0:1}
-        secondLineChar=${secondline:0:1}
+        firstLineChar=${{ env.firstline:0:1 }}
+        secondLineChar=${{ env.secondline:0:1 }}
         if [ "$firstLineChar" == "#" ]; then echo result="heading" >> $GITHUB_ENV; else echo result="No heading" >> $GITHUB_ENV ; fi
         
 
