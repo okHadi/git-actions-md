@@ -24,9 +24,9 @@ jobs:
 
       - name: Bash
         run: |
-          firstline=$(sed '1q;d' README.md) >> $GITHUB_ENV
+         firstline=$(sed '1q;d' README.md)
       #   # reads the first line
-          secondline=$(sed '2q;d' README.md) >> $GITHUB_ENV
+         secondline=$(sed '2q;d' README.md)
       #  #reads the second line
           #echo $secondline
           #echo ${{ env.secondline }}
