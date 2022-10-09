@@ -28,7 +28,7 @@ jobs:
       #   # reads the first line
           secondline=$(sed '2q;d' README.md) >> $GITHUB_ENV
       #  #reads the second line
-          echo $secondline
+          #echo $secondline
           echo ${{ env.secondline }}
          # firstLineChar=${firstline:0:1}
          # secondLineChar=${secondline:0:1}
