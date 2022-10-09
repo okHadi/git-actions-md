@@ -29,7 +29,7 @@ jobs:
           secondline=$(sed '2q;d' README.md) >> $GITHUB_ENV
       #  #reads the second line
           #echo $secondline
-          echo ${{ env.secondline }}
+          #echo ${{ env.secondline }}
          # firstLineChar=${firstline:0:1}
          # secondLineChar=${secondline:0:1}
       #    if [ "$firstLineChar" == "#" ]; then echo result="heading" >> $GITHUB_ENV; else echo result="No heading" >> $GITHUB_ENV ; fi
