@@ -22,9 +22,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      #    - name: Bash
-      #     run: |
-      #      firstline=$(sed '1q;d' README.md)
+      - name: Bash
+        run: |
+          firstline=$(sed '1q;d' README.md)
       #   # reads the first line
       #    secondline=$(sed '2q;d' README.md)
       #  #reads the second line
