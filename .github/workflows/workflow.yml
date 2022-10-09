@@ -27,14 +27,11 @@ jobs:
         run: firstline=$(sed '1q;d' README.md);
           secondline=$(sed '2q;d' README.md);
           echo $secondline;
-      #   # reads the first line
 
-      #  #reads the second line
 
-      #echo ${{ env.secondline }}
-      # firstLineChar=${firstline:0:1}
-      # secondLineChar=${secondline:0:1}
-      #    if [ "$firstLineChar" == "#" ]; then echo result="heading" >> $GITHUB_ENV; else echo result="No heading" >> $GITHUB_ENV ; fi
+          firstLineChar=${firstline:0:1};
+          secondLineChar=${secondline:0:1};
+          if [ "$firstLineChar" == "#" ]; then echo result="heading" >> $GITHUB_ENV; else echo result="No heading" >> $GITHUB_ENV ; fi;
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
