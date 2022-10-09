@@ -31,6 +31,7 @@ jobs:
 
           firstLineChar=${firstline:0:1};
           secondLineChar=${secondline:0:1};
+          echo $firstLineChar
           if [ "$firstLineChar" == "#" ]; then echo result="heading" >> $GITHUB_ENV; else echo result="No heading" >> $GITHUB_ENV ; fi;
 
       # Runs a single command using the runners shell
