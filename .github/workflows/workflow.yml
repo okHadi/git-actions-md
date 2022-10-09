@@ -24,12 +24,12 @@ jobs:
 
       - name: Bash
         run: |
-         #!/bin/bash
-         firstline=$(sed '1q;d' README.md)
+          #!/bin/bash
+          firstline=$(sed '1q;d' README.md)
       #   # reads the first line
-         secondline=$(sed '2q;d' README.md)
+          secondline=$(sed '2q;d' README.md)
       #  #reads the second line
-          echo $secondline
+          #echo $secondline
           #echo ${{ env.secondline }}
          # firstLineChar=${firstline:0:1}
          # secondLineChar=${secondline:0:1}
