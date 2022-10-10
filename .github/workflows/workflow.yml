@@ -30,26 +30,26 @@ jobs:
           secondLineChar=${secondline:0:1};
           echo $firstLineChar;
           echo $secondLineChar;
-          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=titleResult::"heading"' ; else echo '::set-output name=titleResult::"no heading"' ; fi;
-          if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description"'; else echo '::set-output name=desResult::"no description"'; fi;
+          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=titleResult::"title exists"' ; else echo '::set-output name=titleResult::"title does not exist"' ; fi;
+          if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description exists"'; else echo '::set-output name=desResult::"no description"'; fi;
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < README.md;
-          if [[ "${arr[0]}" -le 70 && "${arr[0]}" -ge 50 ]]; then echo '::set-output name=titleLen::"title good"'; else echo '::set-output name=titleLen="title bad"'; fi;
+          if [[ "${arr[0]}" -le 70 && "${arr[0]}" -ge 50 ]]; then echo '::set-output name=titleLen::"title len good"'; else echo '::set-output name=titleLen="title len bad"'; fi;
           unset arr[0];
           total=0;
           for i in ${arr[@]}; do
           let total+=$i;
           done;
-          if [[ ${total} -le 170 && ${total} -ge 140 ]]; then echo '::set-output name=desLen::"description good"'; else echo '::set-output name=desLen::"description bad"'; fi;
+          if [[ ${total} -le 170 && ${total} -ge 140 ]]; then echo '::set-output name=desLen::"description good"'; else echo '::set-output name=desLen::"description len bad"'; fi;
         id: script
 
       # Runs a single command using the runners shell
       - name: Check if for heading length
-        if: ${{ steps.script.outputs.titleResult }} == 'heading' && ${{ steps.script.outputs.titleLen }} == 'title bad'
+        if: ${{ steps.script.outputs.titleResult }} == 'title exists' && ${{ steps.script.outputs.titleLen }} == 'title len bad'
         run: exit 1
 
       - name: Check if for description length
-        if: ${{ steps.script.outputs.desResult }} == 'description' && ${{ steps.script.outputs.desLen }} == 'title bad'
+        if: ${{ steps.script.outputs.desResult }} == 'description exists' && ${{ steps.script.outputs.desLen }} == 'description len bad'
         run: exit 1
 
       # #Runs a set of commands using the runners shell
