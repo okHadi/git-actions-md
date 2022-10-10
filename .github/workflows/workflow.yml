@@ -44,6 +44,8 @@ jobs:
           if [[ ${total} -le 170 && ${total} -ge 140 ]]; then echo '::set-output name=desLen::"description good"'; else echo '::set-output name=desLen::"description len bad"'; fi;
         id: script
 
+      - name: Test
+        run: echo  ${{ steps.script.outputs.titleLen }}
       # Runs a single command using the runners shell
       - name: Check if for heading length
         if: ${{ steps.script.outputs.titleResult }} == 'title exists' && ${{ steps.script.outputs.titleLen }} == 'title len bad'
