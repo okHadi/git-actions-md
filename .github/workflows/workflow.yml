@@ -32,6 +32,7 @@ jobs:
           echo $secondLineChar;
           if [ "$firstLineChar" == "#" ]; then echo '::set-output name=headingResult::"heading"' ; else echo '::set-output name=headingResult::"no heading"'; fi;
           if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description"'; else echo '::set-output name=desResult::"no description"'; fi;
+          echo ${{ steps.script.outputs.headingResult }};
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < README.md;
           echo ${arr[@]};
