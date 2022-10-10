@@ -40,12 +40,16 @@ jobs:
           for i in ${arr[@]}; do
           let total+=$i;
           done;
-          echo $total
+          if [[ ${total} -le 170 && ${total} -ge 140 ]]; then echo '::set-output name=desLen::"description good"'; else echo '::set-output name=desLen::"description bad"'; fi;
         id: script
 
       # Runs a single command using the runners shell
-      - name: Check if Heading does not exist
+      - name: Check if for heading length
         if: steps.script.outputs.titleResult == 'heading' && steps.script.outputs.titleLen == 'title bad'
+        run: exit 1
+
+      - name: Check if for heading length
+        if: steps.script.outputs.desResult == 'heading' && steps.script.outputs.desLen == 'title bad'
         run: exit 1
 
       # #Runs a set of commands using the runners shell
