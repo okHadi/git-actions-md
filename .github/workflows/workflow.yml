@@ -49,7 +49,7 @@ jobs:
         run: exit 1
 
       - name: Check if for heading length
-        if: steps.script.outputs.desResult == 'heading' && steps.script.outputs.desLen == 'title bad'
+        if: steps.script.outputs.desResult == 'description' && steps.script.outputs.desLen == 'title bad'
         run: exit 1
 
       # #Runs a set of commands using the runners shell
