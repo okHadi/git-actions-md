@@ -42,7 +42,6 @@ jobs:
       - name: Check if Heading does not exist
         if: ${{ steps.script.outputs.headingResult }} == "heading"
         run: echo ${{ steps.script.outputs.headingResult }};
-        exit 1
 
       # #Runs a set of commands using the runners shell
       - name: Run a multi-line script
