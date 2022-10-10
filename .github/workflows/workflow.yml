@@ -49,7 +49,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Check if for heading length
         run: | 
-        if ${{ steps.script.outputs.titleResult == 'title exists' && steps.script.outputs.titleLen == 'title len bad' }}; then exit 1; else echo "Title is good"; fi;
+        if [ ${{ steps.script.outputs.titleResult }} == "title exists" && ${{ steps.script.outputs.titleLen }} == "title len bad" ]]; then exit 1; else echo "Title is good"; fi;
 
       - name: Check if for description length
         run: |
