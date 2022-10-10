@@ -24,20 +24,22 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Bash
-        run:
-          if [ -e "README.md" ]; then echo '::set-output name=exist::"File exists"'; else echo '::set-output name=exist::"File does not exist"'; fi;
-          firstline=$(sed '1q;d' README.md);
+        run: firstline=$(sed '1q;d' README.md);
           secondline=$(sed '2q;d' README.md);
           firstLineChar=${firstline:0:1};
           secondLineChar=${secondline:0:1};
           echo $firstLineChar;
           echo $secondLineChar;
-          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=result::"heading"' ; else echo '::set-output name=result::"No heading"'; fi;
+          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=headingResult::"heading"' ; else echo '::set-output name=headingResult::"No heading"'; fi;
+          if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description"'; else echo '::set-output name=desResult::"No description"'; fi;
+          arr=();
+          while IFS= read -r line; do arr+=(${#line}) ; done < README.md;
+          echo ${arr[@]};
         id: script
 
       # Runs a single command using the runners shell
-      - name: Check if Readme does not exist
-        if: ${{ steps.script.outputs.name }} == "File exists"
+      - name: Check if Heading does not exist
+        if: ${{ steps.script.outputs.headingResult }} == "heading"
         uses: actions/github-script@v3
         with:
           script: |
