@@ -45,11 +45,11 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Check if for heading length
-        if: steps.script.outputs.titleResult == 'heading' && steps.script.outputs.titleLen == 'title bad'
+        if: ${{ steps.script.outputs.titleResult }} == 'heading' && ${{ steps.script.outputs.titleLen }} == 'title bad'
         run: exit 1
 
-      - name: Check if for heading length
-        if: steps.script.outputs.desResult == 'description' && steps.script.outputs.desLen == 'title bad'
+      - name: Check if for description length
+        if: ${{ steps.script.outputs.desResult }} == 'description' && ${{ steps.script.outputs.desLen }} == 'title bad'
         run: exit 1
 
       # #Runs a set of commands using the runners shell
