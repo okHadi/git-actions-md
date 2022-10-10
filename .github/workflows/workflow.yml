@@ -30,8 +30,8 @@ jobs:
           secondLineChar=${secondline:0:1};
           echo $firstLineChar;
           echo $secondLineChar;
-          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=headingResult::"heading"' ; else echo '::set-output name=headingResult::"No heading"'; fi;
-          if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description"'; else echo '::set-output name=desResult::"No description"'; fi;
+          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=headingResult::"heading"' ; else echo '::set-output name=headingResult::"no heading"'; fi;
+          if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description"'; else echo '::set-output name=desResult::"no description"'; fi;
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < README.md;
           echo ${arr[@]};
@@ -39,11 +39,8 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Check if Heading does not exist
-        if: ${{ steps.script.outputs.headingResult == "heading" }}
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('envA and envB are not equivalent!')
+        if: ${{ steps.script.outputs.headingResult }} == "heading"
+        run: exit 1
 
       # #Runs a set of commands using the runners shell
       - name: Run a multi-line script
