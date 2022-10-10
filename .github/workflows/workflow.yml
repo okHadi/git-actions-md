@@ -30,17 +30,22 @@ jobs:
           secondLineChar=${secondline:0:1};
           echo $firstLineChar;
           echo $secondLineChar;
-          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=headingResult::"heading"' ; else echo '::set-output name=headingResult::"no heading"' ; fi;
+          if [ "$firstLineChar" == "#" ]; then echo '::set-output name=titleResult::"heading"' ; else echo '::set-output name=titleResult::"no heading"' ; fi;
           if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description"'; else echo '::set-output name=desResult::"no description"'; fi;
-          echo ${{ steps.script.outputs.headingResult }};
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < README.md;
-          echo ${arr[@]};
+          if [[ "${arr[0]}" -le 70 && "${arr[0]}" -ge 50 ]]; then echo '::set-output name=titleLen::"title good"'; else echo '::set-output name=titleLen="title bad"'; fi;
+          unset arr[0];
+          total=0;
+          for i in ${arr[@]}; do
+          let total+=$i;
+          done;
+          echo $total
         id: script
 
       # Runs a single command using the runners shell
       - name: Check if Heading does not exist
-        if: steps.script.outputs.headingResult == 'heading'
+        if: steps.script.outputs.titleResult == 'heading' && steps.script.outputs.titleLen == 'title bad'
         run: exit 1
 
       # #Runs a set of commands using the runners shell
