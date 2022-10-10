@@ -34,6 +34,7 @@ jobs:
           if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::"description exists"'; else echo '::set-output name=desResult::"no description"'; fi;
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < README.md;
+          echo ${arr[0]};
           if [[ "${arr[0]}" -le 70 && "${arr[0]}" -ge 50 ]]; then echo '::set-output name=titleLen::"title len good"'; else echo '::set-output name=titleLen="title len bad"'; fi;
           unset arr[0];
           total=0;
