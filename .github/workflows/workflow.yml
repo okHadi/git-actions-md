@@ -32,6 +32,7 @@ jobs:
           echo $secondLineChar;
           if [ "$firstLineChar" == "#" ]; then echo '::set-output name=titleResult::True' ; else echo '::set-output name=titleResult::False' ; fi;
           if [ -n "$secondLineChar" ]; then echo '::set-output name=desResult::True'; else echo '::set-output name=desResult::False'; fi;
+          echo 
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < README.md;
           echo ${arr[0]};
@@ -45,24 +46,24 @@ jobs:
           echo ${total}
         id: script
 
-      - name: Test
-        run: |
-          if [ ${{ steps.script.outputs.titleLenGood }} == False ];
-          then echo Working ; fi ;
+#      - name: Test
+#        run: |
+#          if [ ${{ steps.script.outputs.titleLenGood }} == False ];
+#          then echo Working ; fi ;
 
       # Runs a single command using the runners shell
 
-#      - name: Check if for heading length
-#        run: |
-#          if [[ ${{ steps.script.outputs.titleResult }} == True && ${{ steps.script.outputs.titleLen }} == False ]];
-#          then exit 1;
-#          else echo "Title is good"; fi;
+      - name: Check if for heading length
+        run: |
+          if [[ ${{ steps.script.outputs.titleResult }} == True && ${{ steps.script.outputs.titleLen }} == False ]];
+          then exit 1;
+          else echo "Title is good"; fi;
 
-#       - name: Check if for description length
-#         run: |
-#         if [[ ${{ steps.script.outputs.desResult == True && ${{ steps.script.outputs.descLenGood }} == False ]];
-#         then exit 1;
-#         else echo "Des is good"; fi;
+       - name: Check if for description length
+         run: |
+           if [[ ${{ steps.script.outputs.desResult == True && ${{ steps.script.outputs.descLenGood }} == False ]];
+           then exit 1;
+           else echo "Des is good"; fi;
 
 # #Runs a set of commands using the runners shell
 #    - name: Run a multi-line script
