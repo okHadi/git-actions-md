@@ -50,19 +50,17 @@ jobs:
           if [ ${{ steps.script.outputs.titleLenGood }} == False ];
           then exit 1 ; fi ;
 
-      # Runs a single command using the runners shell
-
-  #    - name: Check if for heading length
-  #      run: |
-  #       if [ ${{ steps.script.outputs.titleLenGood }} == False ];
-  #       then exit 1; fi ;
+      - name: Check if for heading length
+        run: |
+         if [ ${{ steps.script.outputs.titleLenGood }} == False ];
+         then exit 1; fi ;
 
 #          else echo "Title is good"; fi;
 
-#    - name: Check if for description length
-#       run: |
-#         if [ ${{ steps.script.outputs.descLenGood }} == False ];
-#         then exit 1; fi ;
+    - name: Check if for description length
+      run: |
+        if [ ${{ steps.script.outputs.descLenGood }} == False ];
+        then exit 1; fi ;
 #           else echo "Des is good"; fi;
 
 # #Runs a set of commands using the runners shell
