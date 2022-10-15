@@ -24,7 +24,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Bash
-        run: firstline=$(sed '1q;d' README.md);
+        run: |
+          firstline=$(sed '1q;d' README.md);
           secondline=$(sed '2q;d' README.md);
           firstLineChar=${firstline:0:1};
           secondLineChar=${secondline:0:1};
