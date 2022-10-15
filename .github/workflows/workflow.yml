@@ -47,7 +47,7 @@ jobs:
       - name: Test
         run: |
           echo  ${{ steps.script.outputs.titleLenGood }};
-          if [ ${{ steps.script.outputs.titleLenGood }} -e true ];
+          if [ ${{ steps.script.outputs.titleLenGood }} == True ];
           then echo Working ; fi ;
 
       # Runs a single command using the runners shell
