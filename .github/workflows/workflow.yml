@@ -45,7 +45,7 @@ jobs:
         id: script
 
       - name: Test
-        run: echo  ${{ steps.script.outputs.titleLen }}
+        run: echo  ${{ steps.script.outputs.titleLenGood }}
       # Runs a single command using the runners shell
   #    - name: Check if for heading length
       #  run: | 
