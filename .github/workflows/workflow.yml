@@ -42,11 +42,12 @@ jobs:
           let total+=$i;
           done;
           if [[ ${total} -le 170 && ${total} -ge 140 ]]; then echo '::set-output name=descLenGood::True'; else echo '::set-output name=desLenGood::False'; fi;
+          echo ${total}
         id: script
 
       - name: Test
         run: |
-          if [ ${{ steps.script.outputs.titleLenGood }} == True ];
+          if [ ${{ steps.script.outputs.titleLenGood }} == False ];
           then echo Working ; fi ;
 
       # Runs a single command using the runners shell
