@@ -44,8 +44,8 @@ jobs:
         run: |
           firstline=$(sed '1q;d' README.md);
           secondline=$(sed '2q;d' README.md);
-          firstLineLetter=${firstline%% *}
-          secondLineLetter=${secondline%% *} 
+          firstLineLetter=${firstline%% *};
+          secondLineLetter=${secondline%% *}; 
           if [ "$firstLineLetter" == "title:" ]; then echo '::set-output name=titleResult::True' ; else echo '::set-output name=titleResult::False' ; fi;
           if [ "$secondLineLetter" == "description:" ]; then echo '::set-output name=desResult::True'; else echo '::set-output name=desResult::False'; fi;
           arr=();
