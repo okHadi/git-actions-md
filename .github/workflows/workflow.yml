@@ -25,7 +25,7 @@ jobs:
   conditional_job:
     runs-on: "ubuntu-latest"
     needs: [conditional_job_check_files]
-    if: needs.conditional_job_check_files.outputs.verify-changed-files == 'true'
+    if: needs.conditional_job_check_files.outputs.files_changed  == 'true'
     steps:
       - uses: actions/checkout@v3
       - name: Bash script
