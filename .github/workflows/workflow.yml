@@ -38,8 +38,8 @@ jobs:
           Write-Host "::set-output name=docs_changed::$HasDiff"
 
       # Run the step only with "docs_changed" equals "True"
-      - shell: pwsh
         # steps.<step_id>.outputs.<output name>
+        name : Check
         if: steps.check_file_changed.outputs.docs_changed == 'True'
         run: |
           firstline=$(sed '1q;d' README.md);
