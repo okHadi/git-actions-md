@@ -39,6 +39,7 @@ jobs:
     needs: [conditional_job_check_files]
     if: needs.conditional_job_check_files.outputs.docs_changed == 'True'
     steps:
+      - uses: actions/checkout@v3
       - name: Bash script
         run: |
           firstline=$(sed '1q;d' README.md);
