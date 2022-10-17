@@ -16,25 +16,31 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  conditional_step:
+    runs-on: 'ubuntu-20.04'
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: Get MD changed files
-        id: changed-md-files
-        uses: tj-actions/changed-files@v23
-        with:
-          files: |
-            *.md
-            **/*.md
+    - uses: actions/checkout@v2
+      with:
+        # Checkout as many commits as needed for the diff
+        fetch-depth: 2
+    - shell: pwsh
+      # Give an id to the step, so we can reference it later
+      id: check_file_changed
+      run: |
+        # Diff HEAD with the previous commit
+        $diff = git diff --name-only HEAD^ HEAD
 
-      - name: Bash script
-        if: steps.changed-md-files.outputs.any_changed == 'true'
+        # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
+        $SourceDiff = $diff | Where-Object { $_ -match '.md$' }
+        $HasDiff = $SourceDiff.Length -gt 0
+
+        # Set the output named "docs_changed"
+        Write-Host "::set-output name=docs_changed::$HasDiff"
+
+    # Run the step only with "docs_changed" equals "True"
+    - shell: pwsh
+      # steps.<step_id>.outputs.<output name>
+      if: steps.check_file_changed.outputs.docs_changed == 'True'
         run: |
           firstline=$(sed '1q;d' README.md);
           secondline=$(sed '2q;d' README.md);
@@ -48,7 +54,7 @@ jobs:
           if [[ $((${arr[0]} - 6)) -le 70 && $((${arr[0]} - 6)) -ge 50 ]]; then echo '::set-output name=titleLenGood::True'; else echo '::set-output name=titleLenGood::False'; fi;
 
           if [[ $((${arr[1]} - 12)) -le 170 && $((${arr[1]} - 12)) -ge 140 ]]; then echo '::set-output name=descLenGood::True'; else echo '::set-output name=desLenGood::False'; fi;
-          id: script
+        id: script
 
       - name: Check for heading length
         run: |
