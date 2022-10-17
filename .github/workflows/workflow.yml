@@ -10,16 +10,27 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
+  
+        
   # This workflow contains a single job called "build"
   build:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v12.0
+        id: verify-changed-files
+        with:
+          files: |
+            *.md
+      
+    if: steps.verify-changed-files.outputs.files_changed == 'true'
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: checkout
-        uses: actions/checkout@v3
 
       - name: Bash script
         run: |
