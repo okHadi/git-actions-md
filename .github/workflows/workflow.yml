@@ -4,6 +4,8 @@ name: CI
 
 # Controls when the workflow will run
 on:
+  push:
+    paths: -"**.md"
   # Triggers the workflow on pull request event but only for the "main" branch
   pull_request:
     branches: ["main"]
