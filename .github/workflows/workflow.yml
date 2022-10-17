@@ -7,39 +7,21 @@ on:
   # Triggers the workflow on pull request event but only for the "main" branch
   pull_request:
     branches: ["main"]
+    paths: ["*.md"]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  conditional_job_check_files:
-    runs-on: "ubuntu-20.04"
-    # Declare outputs for next jobs
-    outputs:
-      docs_changed: ${{ steps.check_file_changed.outputs.docs_changed }}
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
-        with:
-          # Checkout as many commits as needed for the diff
-          fetch-depth: 2
-      - shell: pwsh
-        id: check_file_changed
-        run: |
-          # Diff HEAD with the previous commit
-          $diff = git diff --name-only HEAD^ HEAD
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: checkout
+        uses: actions/checkout@v3
 
-          # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-          $SourceDiff = $diff | Where-Object { $_ -match '.md$' }
-          $HasDiff = $SourceDiff.Length -gt 0
-
-          # Set the output named "docs_changed"
-          Write-Host "::set-output name=docs_changed::$HasDiff"
-
-  # Run the job only with "docs_changed" equals "True"
-  conditional_job:
-    runs-on: "ubuntu-20.04"
-    needs: [conditional_job_check_files]
-    if: needs.conditional_job_check_files.outputs.docs_changed == 'True'
-    steps:
-      - uses: actions/checkout@v3
       - name: Bash script
         run: |
           firstline=$(sed '1q;d' README.md);
