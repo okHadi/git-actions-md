@@ -11,16 +11,16 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   check:
-  runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-      - name: Verify Changed files
-        uses: tj-actions/verify-changed-files@v12.0
-        id: verify-changed-files
-        with:
-          files: |
-            *.md
+    runs-on: ubuntu-latest
+      steps:
+        - name: checkout
+          uses: actions/checkout@v3
+        - name: Verify Changed files
+          uses: tj-actions/verify-changed-files@v12.0
+          id: verify-changed-files
+          with:
+            files: |
+              *.md
 
   build:
     if: steps.verify-changed-files.outputs.files_changed == 'true'
