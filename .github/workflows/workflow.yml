@@ -7,7 +7,8 @@ on:
   # Triggers the workflow on pull request event but only for the "main" branch
   pull_request:
     branches: ["main"]
-    paths: ["*.md"]
+    paths:
+      - "**.md"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
