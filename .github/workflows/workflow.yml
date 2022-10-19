@@ -4,14 +4,11 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  push:
-    paths:
-      - "**.md"
-  # Triggers the workflow on pull request event but only for the "main" branch
   pull_request:
     branches: ["main"]
-    paths:
-      - "**.md"
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,28 +16,13 @@ jobs:
   conditional_step:
     runs-on: "ubuntu-20.04"
     steps:
+      - name: Checkout
       - uses: actions/checkout@v2
-        with:
-          # Checkout as many commits as needed for the diff
-          fetch-depth: 2
-      - shell: pwsh
-        # Give an id to the step, so we can reference it later
-        id: check_file_changed
-        run: |
-          # Diff HEAD with the previous commit
-          $diff = git diff --name-only HEAD^ HEAD
-
-          # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-          $SourceDiff = $diff | Where-Object { $_ -match '.md$' }
-          $HasDiff = $SourceDiff.Length -gt 0
-
-          # Set the output named "docs_changed"
-          Write-Host "::set-output name=docs_changed::$HasDiff"
-
-      # Run the step only with "docs_changed" equals "True"
-        # steps.<step_id>.outputs.<output name>
-        name : Check
-        if: steps.check_file_changed.outputs.docs_changed == 'True'
+      - name: Check if .md file was updated in this Pull Request
+        run: echo "GITHUB_MD_FILE_CHANGED=$(gh pr view 9 --json files --jq '.files.[].path' | grep -i '.md')" >> $GITHUB_ENV
+      - name: test
+        run: echo $GITHUB_MD_FILE_CHANGED
+      - name : Check
         run: |
           firstline=$(sed '1q;d' README.md);
           secondline=$(sed '2q;d' README.md);
