@@ -64,7 +64,6 @@ jobs:
             with open(env_file, "a") as myfile:
               x = findline("title:")
               myfile.write(f"TITLE_LINE={x}"+"\n")
-              myfile.write(f"TITLE_EXISTS"")
             with open(env_file, "a") as myfile:
                y = findline("description:")
                myfile.write(f"DESCRIPTION_LINE={y}")
