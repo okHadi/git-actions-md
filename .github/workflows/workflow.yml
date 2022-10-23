@@ -56,8 +56,8 @@ jobs:
                 for i in range(len(arr)):
                     if word in arr[i]:
                         print(i+1)
-            fineline("title:")
-            fineline("description:")
+            findline("title:")
+            findline("description:")
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
