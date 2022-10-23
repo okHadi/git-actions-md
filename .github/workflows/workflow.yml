@@ -83,7 +83,7 @@ jobs:
                 myfile.write(f"DESCRIPTION_EXIST=True")
 
       - name: Bash script
-        if: ${{ steps.checkmd.outputs.mdchanged == true }}
+        if: ${{ steps.checkmd.outputs.mdchanged == 'true' }}
         id: script
         run: |
           echo $TITLE_LINE;
@@ -96,13 +96,13 @@ jobs:
           if [[ $((${arr[$DESCRIPTION_LINE]} - 12)) -le 170 && $((${arr[$DESCRIPTION_LINE]} - 12)) -ge 140 ]]; then echo '::set-output name=descLenGood::True'; else echo '::set-output name=descLenGood::False'; fi;
 
       - name: Check for heading length
-        if: ${{ steps.checkmd.outputs.mdchanged == true }}
+        if: ${{ steps.checkmd.outputs.mdchanged == 'true' }}
         run: |
           if [[ ${{ env.TITLE_EXIST }} == True && ${{ steps.script.outputs.titleLenGood }} == False ]] ;
           then exit 1; fi ;
 
       - name: Check for description length
-        if: ${{ steps.checkmd.outputs.mdchanged == true }}
+        if: ${{ steps.checkmd.outputs.mdchanged == 'true' }}
         run: |
           if [[ ${{ env.DESCRIPTION_EXIST }} == True && ${{ steps.script.outputs.descLenGood }} == False ]];
           then exit 1; fi ;
