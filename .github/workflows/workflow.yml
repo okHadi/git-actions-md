@@ -32,8 +32,8 @@ jobs:
       - name: Python script to get line number of title and descrition
         id: pythonscript
         uses: jannekem/run-python-script-action@v1
-        if: ${{ steps.checkmd.outputs.mdchanged }}
         with:
+        if: ${{ steps.checkmd.outputs.mdchanged }}
           script: |
             print("Python is working")
             df = open("$GITHUB_MD_FILE_CHANGED")
