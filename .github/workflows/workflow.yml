@@ -63,6 +63,8 @@ jobs:
                         return i+1
             with open(env_file, "a") as myfile:
               x = findline("title:")
+              print(x)
+              type(x)
               if (x == "None"):
                 myfile.write("TITLE_EXIST=False"+"\n")
               else:
@@ -74,8 +76,7 @@ jobs:
                if (y == "None"):
                   myfile.write("DESCRIPTION_EXIST=False")
                else:
-                titleExist = True
-                myfile.write(f"DESCRIPTION_LINE={x}"+"\n")
+                myfile.write(f"DESCRIPTION_LINE={y}"+"\n")
                 myfile.write(f"DESCRIPTION_EXIST=True")
 
       - name: Bash script
