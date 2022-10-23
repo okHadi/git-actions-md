@@ -64,6 +64,7 @@ jobs:
             with open(env_file, "a") as myfile:
               x = findline("title:")
               myfile.write(f"TITLE_LINE={x}"+"\n")
+              myfile.write(f"TITLE_EXISTS"")
             with open(env_file, "a") as myfile:
                y = findline("description:")
                myfile.write(f"DESCRIPTION_LINE={y}")
@@ -74,14 +75,6 @@ jobs:
         run: |
           echo $TITLE_LINE;
           echo $DESCRIPTION_LINE;
-          firstline=$(sed '1q;d' $GITHUB_MD_FILE_CHANGED);
-          secondline=$(sed '2q;d' $GITHUB_MD_FILE_CHANGED);
-          firstLineLetter=${firstline%% *}
-          secondLineLetter=${secondline%% *}
-          echo $firstLineLetter
-          echo $secondLineLetter
-          if [ "$firstLineLetter" == "title:" ]; then echo '::set-output name=titleResult::True' ; else echo '::set-output name=titleResult::False' ; fi;
-          if [ "$secondLineLetter" == "description:" ]; then echo '::set-output name=desResult::True'; else echo '::set-output name=desResult::False'; fi;
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < $GITHUB_MD_FILE_CHANGED;
           echo ${arr[@]};
