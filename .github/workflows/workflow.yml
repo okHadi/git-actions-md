@@ -63,17 +63,29 @@ jobs:
                         return i+1
             with open(env_file, "a") as myfile:
               x = findline("title:")
-              myfile.write(f"TITLE_LINE={x}"+"\n")
+              if (x == "None"):
+                myfile.write("TITLE_EXIST=False"+"\n")
+              else:
+                myfile.write(f"TITLE_LINE={x}"+"\n")
+                myfile.write(f"TITLE_EXIST=True"+"\n")
+              
             with open(env_file, "a") as myfile:
-               y = findline("description:")
-               myfile.write(f"DESCRIPTION_LINE={y}")
+               x = findline("title:")
+                if (y == "None"):
+                  myfile.write("DESCRIPTION_EXIST=False")
+                else:
+                  titleExist = True
+                  myfile.write(f"DESCRIPTION_LINE={x}"+"\n")
+                  myfile.write(f"DESCRIPTION_EXIST=True")
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
         id: script
         run: |
           echo $TITLE_LINE;
+          echo $TITLE_EXIST;
           echo $DESCRIPTION_LINE;
+          echo $DESCRIPTION_EXIST;
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < $GITHUB_MD_FILE_CHANGED;
           echo ${arr[@]};
