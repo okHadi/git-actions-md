@@ -83,7 +83,7 @@ jobs:
                 myfile.write(f"DESCRIPTION_EXIST=True")
 
       - name: Bash script
-        if: ${{ steps.checkmd.outputs.mdchanged }}
+        if: ${{ steps.checkmd.outputs.mdchanged == true }}
         id: script
         run: |
           echo $TITLE_LINE;
