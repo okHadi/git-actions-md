@@ -1,1 +1,1 @@
-console.log("Changes made. Workflow should not run. Final test")
+console.log("MD file should be ignored.")

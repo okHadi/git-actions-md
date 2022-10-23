@@ -23,6 +23,7 @@ jobs:
           echo $GITHUB_MD_FILE_CHANGED
           echo $GITHUB_PR_NUMBER
           echo ::set-output name=mdfile::$GITHUB_MD_FILE_CHANGED
+
       - name: Check if md file changed
         id: checkmd
         shell: bash
@@ -37,8 +38,11 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: test
+        run: echo ${{ steps.checkmd.outputs.mdchanged }}
+
       - name: Python script to get line number of title and descrition
-        if: ${{ steps.checkmd.outputs.mdchanged }}
+        if: ${{ steps.checkmd.outputs.mdchanged == 'true' }}
         id: pythonscript
         uses: jannekem/run-python-script-action@v1
         with:
@@ -79,7 +83,7 @@ jobs:
                 myfile.write(f"DESCRIPTION_EXIST=True")
 
       - name: Bash script
-        if: ${{ steps.checkmd.outputs.mdchanged }}
+        if: ${{ steps.checkmd.outputs.mdchanged == 'true' }}
         id: script
         run: |
           echo $TITLE_LINE;
@@ -88,13 +92,18 @@ jobs:
           echo $DESCRIPTION_EXIST;
           arr=();
           while IFS= read -r line; do arr+=(${#line}) ; done < $GITHUB_MD_FILE_CHANGED;
-          if [[ $((${arr[$TITLE_LINE]} - 6)) -le 70 && $((${arr[$TITLE_LINE]} - 6)) -ge 50 ]]; then echo '::set-output name=titleLenGood::True'; else echo '::set-output name=titleLenGood::False'; fi;
-          if [[ $((${arr[$DESCRIPTION_LINE]} - 12)) -le 170 && $((${arr[$DESCRIPTION_LINE]} - 12)) -ge 140 ]]; then echo '::set-output name=descLenGood::True'; else echo '::set-output name=descLenGood::False'; fi;
+          echo $((${arr[$TITLE_LINE-1]} - 6))
+          if [[ $((${arr[$TITLE_LINE-1]} - 6)) -le 70 && $((${arr[$TITLE_LINE-1]} - 6)) -ge 50 ]]; then echo '::set-output name=titleLenGood::True'; else echo '::set-output name=titleLenGood::False'; fi;
+          if [[ $((${arr[$DESCRIPTION_LINE-1]} - 12)) -le 170 && $((${arr[$DESCRIPTION_LINE-1]} - 12)) -ge 140 ]]; then echo '::set-output name=descLenGood::True'; else echo '::set-output name=descLenGood::False'; fi;
+
       - name: Check for heading length
+        if: ${{ steps.checkmd.outputs.mdchanged == 'true' }}
         run: |
           if [[ ${{ env.TITLE_EXIST }} == True && ${{ steps.script.outputs.titleLenGood }} == False ]] ;
           then exit 1; fi ;
+
       - name: Check for description length
+        if: ${{ steps.checkmd.outputs.mdchanged == 'true' }}
         run: |
           if [[ ${{ env.DESCRIPTION_EXIST }} == True && ${{ steps.script.outputs.descLenGood }} == False ]];
           then exit 1; fi ;
