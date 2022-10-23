@@ -16,6 +16,7 @@ jobs:
         run: |
           echo $GITHUB_MD_FILE_CHANGED
           echo $GITHUB_PR_NUMBER
+          echo ::set-output name=mdfile::$GITHUB_MD_FILE_CHANGED
       - name: Check if md file changed
         id: checkmd
         shell: bash
@@ -36,7 +37,7 @@ jobs:
         with:
           script: |
             print("Python is working")
-            df = open("$GITHUB_MD_FILE_CHANGED")
+            df = open("${{ steps.checkmd.outputs.mdfile }}" )
             read = df.read()
             df.seek(0)
             read
