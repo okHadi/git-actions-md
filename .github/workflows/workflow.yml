@@ -23,6 +23,7 @@ jobs:
           echo $GITHUB_MD_FILE_CHANGED
           echo $GITHUB_PR_NUMBER
           echo ::set-output name=mdfile::$GITHUB_MD_FILE_CHANGED
+
       - name: Check if md file changed
         id: checkmd
         shell: bash
@@ -90,10 +91,12 @@ jobs:
           while IFS= read -r line; do arr+=(${#line}) ; done < $GITHUB_MD_FILE_CHANGED;
           if [[ $((${arr[$TITLE_LINE]} - 6)) -le 70 && $((${arr[$TITLE_LINE]} - 6)) -ge 50 ]]; then echo '::set-output name=titleLenGood::True'; else echo '::set-output name=titleLenGood::False'; fi;
           if [[ $((${arr[$DESCRIPTION_LINE]} - 12)) -le 170 && $((${arr[$DESCRIPTION_LINE]} - 12)) -ge 140 ]]; then echo '::set-output name=descLenGood::True'; else echo '::set-output name=descLenGood::False'; fi;
+
       - name: Check for heading length
         run: |
           if [[ ${{ env.TITLE_EXIST }} == True && ${{ steps.script.outputs.titleLenGood }} == False ]] ;
           then exit 1; fi ;
+
       - name: Check for description length
         run: |
           if [[ ${{ env.DESCRIPTION_EXIST }} == True && ${{ steps.script.outputs.descLenGood }} == False ]];
