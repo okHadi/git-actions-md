@@ -94,9 +94,9 @@ jobs:
           if [[ $((${arr[DESCRIPTION_LINE]} - 12)) -le 170 && $((${arr[DESCRIPTION_LINE]} - 12)) -ge 140 ]]; then echo '::set-output name=descLenGood::True'; else echo '::set-output name=desLenGood::False'; fi;
       - name: Check for heading length
         run: |
-          if [[ $TITLE_EXIST == True && ${{ steps.script.outputs.titleLenGood }} == False ]] ;
+          if [[ ${{ TITLE_EXIST }} == True && ${{ steps.script.outputs.titleLenGood }} == False ]] ;
           then exit 1; fi ;
       - name: Check for description length
         run: |
-          if [[ $DESCRIPTION_EXIST == True && ${{ steps.script.outputs.descLenGood }} == False ]];
+          if [[ $ {{ DESCRIPTION_EXIST }} == True && ${{ steps.script.outputs.descLenGood }} == False ]];
           then exit 1; fi ;
