@@ -13,6 +13,7 @@ jobs:
       - name: Check if .md file was updated in this Pull Request
         run: echo "GITHUB_MD_FILE_CHANGED=$(gh pr view $GITHUB_PR_NUMBER --json files --jq '.files.[].path' | grep -i '.md')" >> $GITHUB_ENV
       - name: test
+      - id: mdfile
         run: |
           echo $GITHUB_MD_FILE_CHANGED
           echo $GITHUB_PR_NUMBER
@@ -37,7 +38,7 @@ jobs:
         with:
           script: |
             print("Python is working")
-            df = open("${{ steps.checkmd.outputs.mdfile }}" )
+            df = open("${{ steps.mdfile.outputs.mdfile }}" )
             read = df.read()
             df.seek(0)
             read
