@@ -62,8 +62,8 @@ jobs:
                         print(i+1)
                         return i+1
             with open(env_file, "a") as myfile:
-              myfile.write("TITLE_LINE=findline("title:")")
-              myfile.write("DESCRIPTION_LINE=findline("description:")")
+              myfile.write("TITLE_LINE=1")
+              myfile.write("DESCRIPTION_LINE=2")
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
