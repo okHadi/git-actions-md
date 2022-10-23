@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: "3.10"
       - run: |
-          df = open("$GITHUB_MD_FILE_CHANGED")
+          df = open($GITHUB_MD_FILE_CHANGED)
           read = df.read()
           df.seek(0)
           read
