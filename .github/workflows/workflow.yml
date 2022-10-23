@@ -41,8 +41,8 @@ jobs:
       - name: test
         run: echo ${{ steps.checkmd.outputs.mdchanged }}
 
-      - name: Python script to get line number of title and descrition
-        if: ${{ steps.checkmd.outputs.mdchanged }} == true
+      - if: ${{ steps.checkmd.outputs.mdchanged }}
+        name: Python script to get line number of title and descrition
         id: pythonscript
         uses: jannekem/run-python-script-action@v1
         with:
