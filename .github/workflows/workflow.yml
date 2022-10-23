@@ -63,9 +63,10 @@ jobs:
                         return i+1
             with open(env_file, "a") as myfile:
               x = findline("title:")
-              y = findline("description:")
-              myfile.write(f"TITLE_LINE={x}")
-              myfile.write(f"DESCRIPTION_LINE={y}")
+              myfile.write(f"TITLE_LINE={x}"+"\n")
+            with open(env_file, "a") as myfile:
+               y = findline("description:")
+               myfile.write(f"DESCRIPTION_LINE={y}")
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
