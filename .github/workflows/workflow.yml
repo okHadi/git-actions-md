@@ -70,7 +70,7 @@ jobs:
                 myfile.write(f"TITLE_EXIST=True"+"\n")
               
             with open(env_file, "a") as myfile:
-               x = findline("title:")
+               y = findline("description:")
                if (y == "None"):
                   myfile.write("DESCRIPTION_EXIST=False")
                else:
