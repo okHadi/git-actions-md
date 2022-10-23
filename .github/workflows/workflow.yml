@@ -30,25 +30,25 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      - run: |
-          print("Python is working")
-          df = open($GITHUB_MD_FILE_CHANGED)
-          read = df.read()
-          df.seek(0)
-          read
-          arr = []
-          line = 1
-          for word in read:
-              if word == '\n':
-                  line += 1
-          for i in range(line):
-              arr.append(df.readline())
-          def findline(word):
-              for i in range(len(arr)):
-                  if word in arr[i]:
-                      print(i+1)
-          ::set-output name=titleLine::findline("title:")
-          ::set-output name=descriptionLine::findline("description:")
+          run: |
+            print("Python is working")
+            df = open($GITHUB_MD_FILE_CHANGED)
+            read = df.read()
+            df.seek(0)
+            read
+            arr = []
+            line = 1
+            for word in read:
+                if word == '\n':
+                    line += 1
+            for i in range(line):
+                arr.append(df.readline())
+            def findline(word):
+                for i in range(len(arr)):
+                    if word in arr[i]:
+                        print(i+1)
+            ::set-output name=titleLine::findline("title:")
+            ::set-output name=descriptionLine::findline("description:")
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
