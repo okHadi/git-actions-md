@@ -51,8 +51,8 @@ jobs:
                 for i in range(len(arr)):
                     if word in arr[i]:
                         print(i+1)
-            ::set-output name=titleLine::findline("title:")
-            ::set-output name=descriptionLine::findline("description:")
+            print(fineLine("title:"))
+            print(fineLine("description:"))
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
