@@ -63,9 +63,7 @@ jobs:
                         return i+1
             with open(env_file, "a") as myfile:
               x = findline("title:")
-              print(x)
-              type(x)
-              if (x == "None"):
+              if x is None:
                 myfile.write("TITLE_EXIST=False"+"\n")
               else:
                 myfile.write(f"TITLE_LINE={x}"+"\n")
@@ -73,7 +71,7 @@ jobs:
               
             with open(env_file, "a") as myfile:
                y = findline("description:")
-               if (y == "None"):
+               if y is None:
                   myfile.write("DESCRIPTION_EXIST=False")
                else:
                 myfile.write(f"DESCRIPTION_LINE={y}"+"\n")
