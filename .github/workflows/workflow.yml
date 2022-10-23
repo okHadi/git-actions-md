@@ -39,7 +39,7 @@ jobs:
           python-version: "3.10"
 
       - name: test
-      - run: echo ${{ steps.checkmd.outputs.mdchanged }}
+        run: echo ${{ steps.checkmd.outputs.mdchanged }}
 
       - name: Python script to get line number of title and descrition
         if: ${{ steps.checkmd.outputs.mdchanged }}
