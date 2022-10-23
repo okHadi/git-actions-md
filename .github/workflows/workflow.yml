@@ -62,6 +62,8 @@ jobs:
                         print(i+1)
                         return i+1
             with open(env_file, "a") as myfile:
+              x = findline("title:")
+              y = findline("description:")
               myfile.write(f"TITLE_LINE={x}")
               myfile.write(f"DESCRIPTION_LINE={y}")
 
