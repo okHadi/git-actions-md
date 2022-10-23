@@ -43,6 +43,8 @@ jobs:
         uses: jannekem/run-python-script-action@v1
         with:
           script: |
+            import os
+            env_file = os.getenv('GITHUB_ENV')
             df = open("${{ steps.mdfile.outputs.mdfile }}" )
             read = df.read()
             df.seek(0)
@@ -58,15 +60,18 @@ jobs:
                 for i in range(len(arr)):
                     if word in arr[i]:
                         print(i+1)
-            set_env("TITLE_LINE", findline("title:"))
-            set_env("DESCRIPTION_LINE", findline("description:"))
+                        return i+1
+            with open(env_file, "a") as myfile:
+              myfile.write("TITLE_LINE=findline("title:"))
+            with open(env_file, "a") as myfile:
+              myfile.write("DESCRIPTION_LINE=findline("description:"))
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
         id: script
         run: |
-          echo ${{ steps.pythonscript.outputs.titleline }}
-          echo ${{ steps.pythonscript.outputs.descriptionline }}
+          echo $TITLE_LINE
+          echo $DESCRIPTION_LINE
           firstline=$(sed '1q;d' $GITHUB_MD_FILE_CHANGED);
           secondline=$(sed '2q;d' $GITHUB_MD_FILE_CHANGED);
           firstLineLetter=${firstline%% *}
