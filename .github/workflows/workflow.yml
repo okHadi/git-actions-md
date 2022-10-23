@@ -62,15 +62,17 @@ jobs:
                         print(i+1)
                         return i+1
             with open(env_file, "a") as myfile:
-              myfile.write("TITLE_LINE=1")
-              myfile.write("DESCRIPTION_LINE=2")
+              x = findline("title:")
+              y = findline("description:")
+              myfile.write("TITLE_LINE={x}")
+              myfile.write("DESCRIPTION_LINE={y}")
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
         id: script
         run: |
-          echo $TITLE_LINE
-          echo $DESCRIPTION_LINE
+          echo $TITLE_LINE;
+          echo $DESCRIPTION_LINE;
           firstline=$(sed '1q;d' $GITHUB_MD_FILE_CHANGED);
           secondline=$(sed '2q;d' $GITHUB_MD_FILE_CHANGED);
           firstLineLetter=${firstline%% *}
