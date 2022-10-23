@@ -71,12 +71,12 @@ jobs:
               
             with open(env_file, "a") as myfile:
                x = findline("title:")
-                if (y == "None"):
+               if (y == "None"):
                   myfile.write("DESCRIPTION_EXIST=False")
-                else:
-                  titleExist = True
-                  myfile.write(f"DESCRIPTION_LINE={x}"+"\n")
-                  myfile.write(f"DESCRIPTION_EXIST=True")
+               else:
+                titleExist = True
+                myfile.write(f"DESCRIPTION_LINE={x}"+"\n")
+                myfile.write(f"DESCRIPTION_EXIST=True")
 
       - name: Bash script
         if: ${{ steps.checkmd.outputs.mdchanged }}
